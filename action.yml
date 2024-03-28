@@ -1,0 +1,19 @@
+name: Run SSH
+author: 2moe
+description: Connect using the local ssh command and run commands.
+inputs:
+  host:
+    description: Remote Server Host
+    required: false
+  run:
+    description: Commands to be executed on remote server
+    required: true
+  args:
+    description: SSH Client args, one for each line.
+    required: false
+runs:
+  using: "node20"
+  main: "dist/index.js"
+branding:
+  color: "blue"
+  icon: "airplay"

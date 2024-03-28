@@ -1,0 +1,21 @@
+{
+  "name": "local-ssh-action",
+  "version": "0.0.1",
+  "description": "Connect using the local ssh command and run commands",
+  "main": "lib/index.js",
+  "scripts": {
+    "pack": "ncc build --source-map --license licenses.txt"
+  },
+  "keywords": [
+    "github-actions",
+    "ssh"
+  ],
+  "author": "2moe",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  }
+}
