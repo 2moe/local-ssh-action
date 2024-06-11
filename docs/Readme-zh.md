@@ -1,5 +1,10 @@
 # Local-SSH-Action
 
+| Languages/語言          | ID         |
+| ----------------------- | ---------- |
+| 中文                    | zh-Hans-CN |
+| [English](../Readme.md) | en-Latn-US |
+
 与其他的 ssh 不同，此 actions 依赖于本地的 ssh。
 
 在 debian/ubuntu 上，如果没有 ssh 客户端的话，那得要手动安装。
@@ -373,7 +378,7 @@ with:
 
 ```ts
 成功: true,
-失败: false
+失败/未运行: false
 ```
 
 请看下面这个例子：

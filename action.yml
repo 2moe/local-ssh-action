@@ -1,6 +1,6 @@
-name: Run SSH
+name: Local SSH Action
 author: 2moe
-description: Connect using the local ssh command and run commands.
+description: Connect using the local ssh and run commands.
 branding:
   color: "blue"
   icon: "airplay"
