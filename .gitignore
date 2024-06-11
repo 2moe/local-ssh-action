@@ -1,4 +1,4 @@
-# black list
+# # black list
 /*
 node_modules
 .node_modules
@@ -12,8 +12,9 @@ Thumbs.db
 perf.data
 perf.data.old
 flamegraph.svg
+/lib/bs
 
-# white list
+# # white list
 !/assets
 !/.git*
 !/LICENSE*
@@ -22,7 +23,11 @@ flamegraph.svg
 !/Readme.*
 !/src
 !/lib
-!/dist
 !/action.yml
-!/package.json
 !/pnpm-lock.yaml
+!/Cargo*
+!/docs
+!/js
+!/dist
+!/biome.json
+!/package.json
