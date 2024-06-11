@@ -1,0 +1,106 @@
+name: Run SSH
+author: 2moe
+description: Connect using the local ssh command and run commands.
+branding:
+  color: "blue"
+  icon: "airplay"
+inputs:
+  log-level:
+    default: "info"
+    required: false
+    description: |
+      type: enum LogLevel
+      optional values: "trace", "debug", "info", "warn", "error", "off"
+      Default is "info"
+  pre-local-workdir:
+    required: false
+    description: The working directory of the local host
+  pre-local-cmd-async:
+    default: "true"
+    description: |
+      type: boolean
+      When true, the command is run asynchronously.
+        That is, let the local task run in the background before connecting to the remote ssh.
+      When false, the command is run synchronously (blocking).
+        Before connecting to the remote ssh, you must wait for the pre-local-cmd task to complete.
+      Default is true, i.e., it is asynchronous by default.
+
+  pre-local-cmd:
+    required: false
+    description: |
+      Execute the command through NodeJS's `spawn()` or `spawnSync()` before connecting to ssh.
+      This is run on the local host, not the remote host.
+  allow-pre-local-cmd-failure:
+    default: "true"
+    description: |
+      Type: boolean
+      Default is false
+      When true, ignore the errors of pre-local-cmd.
+      When false, if pre-local-cmd fails, this action will exit abnormally.
+  pre-sleep:
+    default: "0"
+    description: |
+      Sleep for a specified amount of time before connecting
+      Synchronously (blocking) for a specific time before connecting to ssh, in seconds.
+      typescript type: number
+      rust       type: u32
+      For example, 1, is to block for 1 second.
+      30, is to block for 30 seconds.
+      P.S. If you need to test whether you can connect normally within a specified time, please use pre-timeout, not pre-sleep.
+  pre-timeout:
+    default: "0"
+    description: |
+      Since the ssh connection may fail, specifying pre-timeout allows you to wait for a specific time.
+      Unlike the blocking pre-sleep, for pre-timeout, once the test connection is successful, it will exit the wait.
+
+      typescript type: number
+      rust       type: u32
+      For example, 120, the waiting timeout is 120 seconds.
+  pre-exit-cmd:
+    default: exit
+    description: |
+      The command needed to test ssh, default is exit.
+      This option only takes effect when pre-timeout > 0.
+      Suppose `pre-timeout: 30`, `pre-exit-cmd: exit`, `host: openbsd-vm`
+      Then it will keep testing the `ssh openbsd-vm exit` connection within 30 seconds.
+      Only when the test connection is successful, will it proceed to the next stage. (PRE -> MAIN)
+  host:
+    required: false
+    description: Remote Server Host
+  ssh-bin:
+    default: "ssh"
+    description: |
+      Local ssh binary file. Default is ssh.
+      In an unstable network environment, you may need to use a specific ssh, not the openssh client.
+  run:
+    required: true
+    description: Commands to be executed on remote server
+  allow-run-failure:
+    required: false
+    description: Default is false.
+  post-run:
+    required: false
+    description: |
+      type: string
+      After the main `run` is completed, you can continue to run `post-run`
+  allow-post-run-failure:
+    default: "true"
+    description: Default is true.
+  args:
+    required: false
+    description: SSH Client args. You can enter shell arguments for ssh, such as `-q`
+#
+outputs:
+  pre-local-cmd-success:
+    description: |
+      The exit status of `pre-local-cmd`.
+      if ok => true
+      else  => false
+  main-run-success:
+    description: The exit status of `run`
+  post-run-success:
+    description: The exit status of `post-run`
+
+runs:
+  using: node20
+  main: dist/index.js

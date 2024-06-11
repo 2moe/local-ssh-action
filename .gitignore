@@ -1,0 +1,33 @@
+# # black list
+/*
+node_modules
+.node_modules
+target
+tmp
+tmp.*
+desktop.ini
+.DS_Store
+.directory
+Thumbs.db
+perf.data
+perf.data.old
+flamegraph.svg
+/lib/bs
+
+# # white list
+!/assets
+!/.git*
+!/LICENSE*
+!/License
+!/Copyright
+!/Readme.*
+!/src
+!/lib
+!/action.yml
+!/pnpm-lock.yaml
+!/Cargo*
+!/docs
+!/js
+!/dist
+!/biome.json
+!/package.json
