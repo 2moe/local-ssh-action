@@ -6,6 +6,7 @@
   "description": "Connect using the local ssh command and run commands",
   "main": "js/index.js",
   "scripts": {
+    "ci:set-git-bot": "git config --local user.name 'github-actions[bot]'; git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com' && git add .",
     "ncc-pack": "ncc build --minify --license licenses.txt",
     "wasm": "wasm-pack build --dev --target nodejs -d pkg",
     "wasm-d": "wasm-pack build --dev --target deno -d pkg",
