@@ -21,7 +21,15 @@ jobs:
           tar -xvf a.tgz
           sudo install -Dm755 cargo-binstall /usr/local/bin
           cargo-binstall -y wasm-pack
+
       - uses: actions/checkout@v4
+      - name: git-merge-branch
+        run: |
+          pnpm run ci:set-git-bot
+          git fetch origin ${{env.branch}}
+          git checkout ${{env.branch}}
+          git merge --squash -X theirs dev --allow-unrelated-histories
+
       - run: |
           npm i -g pnpm
           pnpm i
@@ -29,11 +37,7 @@ jobs:
 
       - name: git-commit
         run: |
-          pnpm run ci:set-git-bot
-          git fetch origin ${{env.branch}}
-          git checkout ${{env.branch}}
           git add .
-          git merge --squash -X theirs dev --allow-unrelated-histories
           git commit -m "ci(action): merge dev & update wasm + dist/index.js"
       - name: git-push
         uses: ad-m/github-push-action@master
