@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: get cargo-binstall url
         id: get_binstall
-        uses: "2moe/get-release-url-action@v0"
+        uses: "2moe/get-release-url-action@dev"
         with:
           repo: cargo-bins/cargo-binstall
           include: x86_64-unknown-linux-gnu
