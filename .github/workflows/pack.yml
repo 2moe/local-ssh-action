@@ -2,6 +2,8 @@ name: pack
 
 on: 
   push:
+    branches:
+      - dev
     paths:
       - ".github/workflows/pack.yml"
 
