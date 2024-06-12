@@ -32,6 +32,7 @@ jobs:
           pnpm run ci:set-git-bot
           git fetch origin ${{env.branch}}
           git checkout ${{env.branch}}
+          git add .
           git merge --squash -X theirs dev --allow-unrelated-histories
           git commit -m "ci(action): merge dev & update wasm + dist/index.js"
       - name: git-push
