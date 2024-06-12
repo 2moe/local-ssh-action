@@ -23,7 +23,7 @@ apt install openssh-client
 而直接开一个虚拟机就方便多了，不需要理解很多细节，就能直接上手了。
 
 最初，它只是几行简单的 javascript 脚本。
-后来，根据我在 github actions 上使用 ssh 的经验，用 rust 重写了核心逻辑，添加了不少实用的选项。
+后来，我根据在 github actions 上使用 ssh 的经验，用 rust 重写了核心逻辑，添加了不少实用的选项。
 
 相信它定能给您带来良好 ssh action 的体验。
 

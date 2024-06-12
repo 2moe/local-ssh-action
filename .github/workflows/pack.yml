@@ -1,0 +1,40 @@
+name: pack
+
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      branch: v0
+    steps:
+      - name: get cargo-binstall url
+        id: get_binstall
+        uses: "2moe/get-release-url-action@v0"
+        with:
+          repo: cargo-bins/cargo-binstall
+          include: x86_64-unknown-linux-gnu
+          exclude: ".sig"
+
+      - name: install wasm-pack
+        run: |
+          curl -Lo a.tgz '${{steps.get_binstall.outputs.url}}'
+          tar -xvf a.tgz
+          sudo install -Dm755 cargo-binstall /usr/local/bin
+          cargo-binstall -y wasm-pack
+      - uses: actions/checkout@v4
+      - run: |
+          npm i -g pnpm
+          pnpm i
+          pnpm run pub
+
+      - name: git-commit
+        run: |
+          pnpm run ci:set-git-bot
+          git checkout ${{env.branch}}
+          git merge --squash -X theirs dev --allow-unrelated-histories
+          git commit -m "ci(action): update wasm & dist/index.js"
+      - name: git-push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{env.branch}}
