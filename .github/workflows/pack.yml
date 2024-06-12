@@ -1,6 +1,10 @@
 name: pack
 
-on: push
+on: 
+  push:
+    paths:
+      - ".github/workflows/pack.yml"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,6 +27,7 @@ jobs:
           cargo-binstall -y wasm-pack
 
       - uses: actions/checkout@v4
+      - run: npm i -g pnpm
       - name: git-merge-branch
         run: |
           pnpm run ci:set-git-bot
@@ -31,7 +36,6 @@ jobs:
           git merge --squash -X theirs dev --allow-unrelated-histories
 
       - run: |
-          npm i -g pnpm
           pnpm i
           pnpm run pub
 
