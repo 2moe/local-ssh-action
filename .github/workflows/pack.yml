@@ -30,9 +30,10 @@ jobs:
       - name: git-commit
         run: |
           pnpm run ci:set-git-bot
+          git fetch origin ${{env.branch}}
           git checkout ${{env.branch}}
           git merge --squash -X theirs dev --allow-unrelated-histories
-          git commit -m "ci(action): update wasm & dist/index.js"
+          git commit -m "ci(action): merge dev & update wasm + dist/index.js"
       - name: git-push
         uses: ad-m/github-push-action@master
         with:
