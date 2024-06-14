@@ -2,9 +2,9 @@ name: build-wasm & release
 
 env:
   branch: v0
-  tag: "v0.0.8"
+  tag: "v0.0.9"
   # commit_msg: "ci(action): merge dev & update wasm + dist/index.js"
-  commit_msg: "ci: release v0.0.8"
+  commit_msg: "ci: release v0.0.9"
 on:
   push:
     branches:
