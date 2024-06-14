@@ -1,6 +1,10 @@
 name: pack
 
-on: 
+env:
+  # commit_msg: "ci(action): merge dev & update wasm + dist/index.js"
+  commit_msg: "docs(readme): +zh-Hant"
+
+on:
   push:
     branches:
       - dev
@@ -44,7 +48,7 @@ jobs:
       - name: git-commit
         run: |
           git add .
-          git commit -m "ci(action): merge dev & update wasm + dist/index.js"
+          git commit -m '${{env.commit_msg}}'
       - name: git-push
         uses: ad-m/github-push-action@master
         with:
