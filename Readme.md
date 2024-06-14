@@ -392,7 +392,7 @@ Similar to allow-run-failure, but it captures the exit status of post-run, not r
 
 ## About Outputs
 
-You can use `${{steps."ssh-action-id".outputs.main-run-success}}`, and change "ssh-action-id" to a specific id, to judge whether run is successful.
+You can use `${{steps."ssh-step-id".outputs.main-run-success}}`, and change "ssh-step-id" to a specific id, to judge whether run is successful.
 
 ```ts
 Success: true,

@@ -30,23 +30,23 @@ apt install openssh-client
 
 ## Inputs
 
-| 输入                        | 描述                                                                     | 默认值    |
-| --------------------------- | ------------------------------------------------------------------------ | --------- |
-| log-level                   | 可选值："trace", "debug", "info", "warn", "error", "off"                 | info      |
-| pre-local-workdir           | 本地工作目录                                                             |           |
-| pre-local-cmd               | 在连接到 ssh 之前，通过 NodeJS 的 `spawn()` 或 `spawnSync()` 执行命令    |           |
-| pre-local-cmd-async         | 类型：boolean。当为 true 时，异步运行 pre-local-cmd                      | true      |
-| allow-pre-local-cmd-failure | 当为 true 时，忽略 pre-local-cmd 的错误                                  | false     |
-| pre-sleep                   | 在连接到 ssh 之前，阻塞特定时间，单位为秒                                | 0         |
-| pre-timeout                 | 由于 ssh 连接可能会失败，指定 pre-timeout 可以让其不断重试连接，直到超时 | 0         |
-| pre-exit-cmd                | 测试 ssh 所需的命令                                                      | exit      |
-| host                        | 远程服务器的主机名或 IP                                                  | 127.0.0.1 |
-| ssh-bin                     | 在不稳定的网络环境中，您可能需要使用特定的ssh，而不是openssh客户端       | ssh       |
-| run                         | 在远程主机上执行命令                                                     |           |
-| allow-run-failure           | 类型：boolean                                                            | false     |
-| post-run                    | 在 `run` 完成后，您可以继续运行 `post-run`                               |           |
-| allow-post-run-failure      | 类型：boolean                                                            | true      |
-| args                        | SSH 客户端参数，e.g., `-q`                                               |           |
+| 输入                        | 描述                                                                             | 默认值    |
+| --------------------------- | -------------------------------------------------------------------------------- | --------- |
+| log-level                   | 可选值："trace", "debug", "info", "warn", "error", "off"                         | info      |
+| pre-local-workdir           | 本地工作目录                                                                     |           |
+| pre-local-cmd               | 在连接到 ssh 之前，通过 NodeJS 的 `spawn()` 或 `spawnSync()` 执行命令            |           |
+| pre-local-cmd-async         | 类型：boolean。当为 true 时，异步运行 `pre-local-cmd`                            | true      |
+| allow-pre-local-cmd-failure | 类型：boolean。当为 true 时，允许 `pre-local-cmd` 失败 (忽略 pre-local-cmd 出错) | false     |
+| pre-sleep                   | 在连接到 ssh 之前，阻塞特定时间，单位为秒                                        | 0         |
+| pre-timeout                 | 由于 ssh 连接可能会失败，指定 `pre-timeout` 可以让其不断重试连接，直到超时       | 0         |
+| pre-exit-cmd                | 测试 ssh 所需的命令                                                              | exit      |
+| host                        | 远程服务器的主机名或 IP                                                          | 127.0.0.1 |
+| ssh-bin                     | 在不稳定的网络环境中，您可能需要使用特定的ssh，而不是 openssh 客户端             | ssh       |
+| run                         | 在远程主机上执行的命令                                                           |           |
+| allow-run-failure           | 类型：boolean。当为 true 时，允许 `run` 失败                                     | false     |
+| post-run                    | 在 `run` 完成后，您可以继续运行 `post-run`                                       |           |
+| allow-post-run-failure      | 类型：boolean                                                                    | true      |
+| args                        | SSH 客户端参数，e.g., `-q`                                                       |           |
 
 ## Get Started
 
@@ -393,7 +393,7 @@ with:
 
 ## 关于输出
 
-你可以使用 `${{steps."ssh-action-id".outputs.main-run-success}}`，并将 "ssh-action-id" 修改为特定 id，来判断 run 是否成功。
+您可以使用 `${{steps."ssh-step-id".outputs.main-run-success}}`，并将 "ssh-step-id" 修改为特定 id，来判断 run 是否成功。
 
 ```ts
 成功: true,
