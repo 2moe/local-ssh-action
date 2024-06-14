@@ -10,7 +10,7 @@ on:
     branches:
       - dev
     paths:
-      - ".github/workflows/pack.yml"
+      - ".github/workflows/release.yml"
 
 jobs:
   build:
@@ -35,6 +35,7 @@ jobs:
 
       - name: git-merge-branch
         run: |
+          npm i -g pnpm
           pnpm run ci:set-git-bot
           git fetch origin ${{env.branch}}
           git checkout ${{env.branch}}
@@ -42,7 +43,6 @@ jobs:
 
       - name: build
         run: |
-          npm i -g pnpm
           pnpm i
           pnpm run pub
 
