@@ -28,6 +28,26 @@ apt install openssh-client
 
 相信它定能給您帶來良好 ssh action 的體驗。
 
+## Inputs
+
+| 輸入                        | 描述                                                                     | 預設值    |
+| --------------------------- | ------------------------------------------------------------------------ | --------- |
+| log-level                   | 可選值："trace", "debug", "info", "warn", "error", "off"                 | info      |
+| pre-local-workdir           | 本地工作目錄                                                             |           |
+| pre-local-cmd               | 在連線到 ssh 之前，透過 NodeJS 的 `spawn()` 或 `spawnSync()` 執行命令    |           |
+| pre-local-cmd-async         | 型別：boolean。當為 true 時，非同步執行 pre-local-cmd                      | true      |
+| allow-pre-local-cmd-failure | 當為 true 時，忽略 pre-local-cmd 的錯誤                                  | false     |
+| pre-sleep                   | 在連線到 ssh 之前，阻塞特定時間，單位為秒                                | 0         |
+| pre-timeout                 | 由於 ssh 連線可能會失敗，指定 pre-timeout 可以讓其不斷重試連線，直到超時 | 0         |
+| pre-exit-cmd                | 測試 ssh 所需的命令                                                      | exit      |
+| host                        | 遠端伺服器的主機名或 IP                                                  | 127.0.0.1 |
+| ssh-bin                     | 在不穩定的網路環境中，您可能需要使用特定的ssh，而不是openssh客戶端       | ssh       |
+| run                         | 在遠端主機上執行命令                                                     |           |
+| allow-run-failure           | 型別：boolean                                                            | false     |
+| post-run                    | 在 `run` 完成後，您可以繼續執行 `post-run`                               |           |
+| allow-post-run-failure      | 型別：boolean                                                            | true      |
+| args                        | SSH 客戶端引數，e.g., `-q`                                               |           |
+
 ## Get Started
 
 先來看一個簡單的例子
@@ -129,21 +149,6 @@ A:
     - i.e., 不允許 main 失敗，但允許 post 失敗。
 
 ### Pre 階段
-
-#### log-level
-
-```yaml
-with:
-  log-level: debug
-```
-
-- 型別: `enum LogLevel`
-- 預設: `info`
-- 可選值: "trace", "debug", "info", "warn", "error", "off"
-
-其中 trace 最詳細，debug 第二詳細，off 無日誌。
-
-如果為空，那預設是 "info"。
 
 #### pre-local-workdir
 
@@ -285,7 +290,20 @@ with:
 
 如果在 20 秒後失敗，那麼整個 step 都會失敗。
 
-### Common (多階段共用)
+### 多階段共用
+
+#### log-level
+
+```yaml
+with:
+  log-level: debug
+```
+
+- 型別: `enum LogLevel`
+- 預設: `info`
+- 可選值: "trace", "debug", "info", "warn", "error", "off"
+
+其中 trace 最詳細，debug 第二詳細，off 無日誌。
 
 #### host
 
