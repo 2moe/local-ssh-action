@@ -26,25 +26,27 @@ Later, based on my experience using ssh on github actions, I rewrote the core lo
 
 I believe it will bring you a good ssh action experience.
 
-## Get Started
+## Inputs
 
-| Inputs                      | Description                                                                                       | Default   |
-| --------------------------- | ------------------------------------------------------------------------------------------------- | --------- |
-| log-level                   | optional values: "trace", "debug", "info", "warn", "error", "off"                                 | info      |
-| pre-local-workdir           | Localhost working directory                                                                       |           |
-| pre-local-cmd               | Execute the command through NodeJS's `spawn()` or `spawnSync()` before connecting to ssh.         |           |
-| pre-local-cmd-async         | Type: boolean. When true, the command is run asynchronously.                                      | true      |
-| allow-pre-local-cmd-failure | When true, ignore the errors of pre-local-cmd.                                                    | false     |
-| pre-sleep                   | blocking for a specific time before connecting to ssh, in seconds.                                | 0         |
-| pre-timeout                 | Since the ssh connection may fail, specifying pre-timeout allows you to wait for a specific time. | 0         |
-| pre-exit-cmd                | The command needed to test ssh, default is exit.                                                  | exit      |
-| host                        | Remote Server Host                                                                                | 127.0.0.1 |
-| ssh-bin                     | In an unstable network environment, you may need to use a specific ssh, not the openssh client.   | ssh       |
-| run                         | Commands to be executed on remote server                                                          |           |
-| allow-run-failure           | Type: boolean                                                                                     | false     |
-| post-run                    | After the main `run` is completed, you can continue to run `post-run`                             |           |
-| allow-post-run-failure      | Type: boolean                                                                                     | true      |
-| args                        | SSH Client args. You can enter shell arguments for ssh, such as `-q`                              |           |
+| Inputs                      | Description                                                                                                       | Default   |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
+| log-level                   | optional values: "trace", "debug", "info", "warn", "error", "off"                                                 | info      |
+| pre-local-workdir           | Localhost working directory                                                                                       |           |
+| pre-local-cmd               | Execute the command through NodeJS's `spawn()` or `spawnSync()` before connecting to ssh.                         |           |
+| pre-local-cmd-async         | Type: boolean. When true, the command is run asynchronously.                                                      | true      |
+| allow-pre-local-cmd-failure | When true, ignore the errors of pre-local-cmd.                                                                    | false     |
+| pre-sleep                   | blocking for a specific time before connecting to ssh, in seconds.                                                | 0         |
+| pre-timeout                 | Since the ssh connection may fail, specifying pre-timeout allows it to keep trying to connect until it times out. | 0         |
+| pre-exit-cmd                | The command needed to test ssh.                                                                                   | exit      |
+| host                        | Remote Server Host                                                                                                | 127.0.0.1 |
+| ssh-bin                     | In an unstable network environment, you may need to use a specific ssh, not the openssh client.                   | ssh       |
+| run                         | Commands to be executed on remote server                                                                          |           |
+| allow-run-failure           | Type: boolean                                                                                                     | false     |
+| post-run                    | After the main `run` is completed, you can continue to run `post-run`                                             |           |
+| allow-post-run-failure      | Type: boolean                                                                                                     | true      |
+| args                        | SSH Client args. You can enter shell arguments for ssh, such as `-q`                                              |           |
+
+## Get Started
 
 Let's start with a simple example.
 
@@ -146,21 +148,6 @@ A:
     - i.e., main failure is not allowed, but post failure is allowed.
 
 ### Pre Stage
-
-#### log-level
-
-```yaml
-with:
-  log-level: debug
-```
-
-- Type: `enum LogLevel`
-- Default: `info`
-- Optional values: "trace", "debug", "info", "warn", "error", "off"
-
-Among them, trace is the most detailed, debug is the second most detailed, and off has no logs.
-
-If it is empty, the default is "info".
 
 #### pre-local-workdir
 
@@ -290,7 +277,7 @@ with:
 - Type: String
 - Default: "exit"
 
-The command needed to test the ssh connection, the default is exit.
+The command needed to test the ssh connection.
 
 This option will only take effect when `pre-timeout > 0`.
 
@@ -302,7 +289,20 @@ Only after the test connection is successful, will it proceed to the next step.
 
 If it fails after 20 seconds, then the entire step will fail.
 
-### Common (used in multiple stages)
+### Shared in Multiple Stages
+
+#### log-level
+
+```yaml
+with:
+  log-level: debug
+```
+
+- Type: `enum LogLevel`
+- Default: `info`
+- Optional values: "trace", "debug", "info", "warn", "error", "off"
+
+Among them, trace is the most detailed, debug is the second most detailed, and off has no logs.
 
 #### host
 
@@ -358,7 +358,7 @@ run: |
 
 The parameters passed to `ssh_bin`, for example `-q -o ServerAliveInterval=60`
 
-#### Main Stage
+### Main Stage
 
 #### run
 
@@ -390,13 +390,19 @@ Similar to run, but it runs in the Post stage.
 
 Similar to allow-run-failure, but it captures the exit status of post-run, not run.
 
-## About Outputs
+## Outputs
 
-You can use `${{steps."ssh-action-id".outputs.main-run-success}}`, and change "ssh-action-id" to a specific id, to judge whether run is successful.
+| Outputs               |
+| --------------------- |
+| pre-local-cmd-success |
+| main-run-success      |
+| post-run-success      |
 
-```ts
-Success: true,
-Failure/Not Run: false
+You can use `${{steps."ssh-step-id".outputs.main-run-success}}`, and change "ssh-step-id" to a specific id, to judge whether run is successful.
+
+```rs
+Success => true,
+Failure | Not-Run => false
 ```
 
 Please see the example below:
