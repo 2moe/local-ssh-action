@@ -1,0 +1,64 @@
+name: build-wasm & release
+
+env:
+  branch: v0
+  tag: "v0.0.8"
+  # commit_msg: "ci(action): merge dev & update wasm + dist/index.js"
+  commit_msg: "ci: release v0.0.8"
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - ".github/workflows/release.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get cargo-binstall url
+        id: get_binstall
+        uses: "2moe/get-release-url-action@v0"
+        with:
+          repo: cargo-bins/cargo-binstall
+          include: x86_64-unknown-linux-gnu
+          exclude: ".sig"
+
+      - name: install wasm-pack
+        run: |
+          curl -Lo a.tgz '${{steps.get_binstall.outputs.url}}'
+          tar -xvf a.tgz
+          sudo install -Dm755 cargo-binstall /usr/local/bin
+          cargo-binstall -y wasm-pack
+
+      - uses: actions/checkout@v4
+
+      - name: git-merge-branch
+        run: |
+          npm i -g pnpm
+          pnpm run ci:set-git-bot
+          git fetch origin ${{env.branch}}
+          git checkout ${{env.branch}}
+          git merge --squash -X theirs dev --allow-unrelated-histories
+
+      - name: build
+        run: |
+          pnpm i
+          pnpm run pub
+
+      - name: git-commit
+        run: |
+          git add .
+          git commit -m '${{env.commit_msg}}'
+      - name: git-push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{env.branch}}
+
+      - name: release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{env.tag}}
+          target_commitish: ${{env.branch}}
+          generate_release_notes: true
