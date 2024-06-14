@@ -1,10 +1,10 @@
 # Local-SSH-Action
 
-| Languages/語言                      | ID         |
-| ----------------------------------- | ---------- |
-| 中文 (Traditional)                  | zh-Hant-TW |
-| [English (US)](../Readme.md)        | en-Latn-US |
-| [中文 (Simplified)](./Readme-zh.md) | zh-Hans-CN |
+| Languages/語言                            | ID         |
+| ----------------------------------------- | ---------- |
+| 中文 (Traditional)                       | zh-Hant-TW |
+| [English (US)](../Readme.md)              | en-Latn-US |
+| [中文 (Simplified)](./Readme-zh.md)      | zh-Hans-CN |
 
 與其他的 ssh actions 不同，此 action 依賴於本地的 ssh。
 
@@ -14,16 +14,16 @@
 apt install openssh-client
 ```
 
-## 創建此 action 的初衷是什麼？
+## 建立此 action 的初衷是什麼？
 
-初衷是為了方便在 github actions 中連接虛擬機。
+初衷是為了方便在 github actions 中連線虛擬機器。
 
 因為有些平臺的交叉編譯工具鏈有點難搞，就算搞定了，那搭建測試環境可能也沒有您想象中的簡單。
 
-比如我想要在 Linux arm64 上構建 OpenBSD riscv64 的 rust bin crate (二進制軟件包)，那麼用常規方法會很辛苦。
-而直接開一個虛擬機就方便多了，不需要理解很多細節，就能直接上手了。
+比如我想要在 Linux arm64 上構建 OpenBSD riscv64 的 rust bin crate (二進位制軟體包)，那麼用常規方法會很辛苦。
+而直接開一個虛擬機器就方便多了，不需要理解很多細節，就能直接上手了。
 
-最初，它只是幾行簡單的 javascript 腳本。
+最初，它只是幾行簡單的 javascript 指令碼。
 後來，我根據在 github actions 上使用 ssh 的經驗，用 rust 重寫了核心邏輯，添加了不少實用的選項。
 
 相信它定能給您帶來良好 ssh action 的體驗。
@@ -43,12 +43,12 @@ jobs:
         uses: 2moe/local-ssh-action@v0
         with:
           log-level: debug
-          pre-local-cmd: printf "pre-local-cmd 是在本地主機上運行的\n"
+          pre-local-cmd: printf "pre-local-cmd 是在本地主機上執行的\n"
           pre-timeout: 20
           args: -q
           host: android-mobile
           run: |
-            printf "這是在遠程主機上哦\n"
+            printf "這是在遠端主機上哦\n"
             /system/bin/toybox uname -m
           allow-run-failure: true
           post-run: printf "Bye\n"
@@ -58,9 +58,9 @@ jobs:
 
 彆著急，容我慢慢與您道來。
 
-上面這段例子本質上是在執行 `ssh android-mobild uname -m`，如果運行 actions 的機器上不存在 `android-mobile` 的 ssh 配置，那就連接不上。
+上面這段例子本質上是在執行 `ssh android-mobild uname -m`，如果執行 actions 的機器上不存在 `android-mobile` 的 ssh 配置，那就連線不上。
 
-解決方法很簡單，創建一個配置就行了。
+解決方法很簡單，建立一個配置就行了。
 
 ```yaml
 name: test
@@ -91,9 +91,9 @@ jobs:
           run: uname -m
 ```
 
-配置只需要創建一次，如果自託管的機器上已經創建了 android-mobile 的配置，那麼下次連接前，就無需再創建了。
+配置只需要建立一次，如果自託管的機器上已經建立了 android-mobile 的配置，那麼下次連線前，就無需再建立了。
 
-如果不想創建配置，也不想用 ed25519 密鑰，想要在單個 step 中用密碼連接，那也是可以做到的。
+如果不想建立配置，也不想用 ed25519 金鑰，想要在單個 step 中用密碼連線，那也是可以做到的。
 不過在此之前，我們得要先了解其基本用法。
 
 ## 詳細說明
@@ -117,14 +117,14 @@ with:
 - Main
 - Post
 
-ssh 連接的正式階段為 Main, 連接之前為 Pre，連接之後為 Post。
+ssh 連線的正式階段為 Main, 連線之前為 Pre，連線之後為 Post。
 
 Q: 為什麼要分階段呢？
 
 A:
 
-- 因為在連接 ssh 前，可能會失敗。故在 Pre 階段，您可以在指定時間內，不斷嘗試連接，直到連接成功。
-- 連接完 ssh 後，您可能需要執行一些清理任務 (e.g., 關閉虛擬機)
+- 因為在連線 ssh 前，可能會失敗。故在 Pre 階段，您可以在指定時間內，不斷嘗試連線，直到連線成功。
+- 連線完 ssh 後，您可能需要執行一些清理任務 (e.g., 關閉虛擬機器)
   - 清理任務可能會失敗，將 main 與 post 分開，可以分別處理任務狀態。
     - i.e., 不允許 main 失敗，但允許 post 失敗。
 
@@ -137,13 +137,13 @@ with:
   log-level: debug
 ```
 
-- 類型: `enum LogLevel`
-- 默認: `info`
+- 型別: `enum LogLevel`
+- 預設: `info`
 - 可選值: "trace", "debug", "info", "warn", "error", "off"
 
 其中 trace 最詳細，debug 第二詳細，off 無日誌。
 
-如果為空，那默認是 "info"。
+如果為空，那預設是 "info"。
 
 #### pre-local-workdir
 
@@ -152,13 +152,13 @@ with:
   pre-local-workdir: /path/to/local-dir
 ```
 
-- 類型: String（文件路徑）
+- 型別: String（檔案路徑）
 
-這個選項修改的是本地的工作目錄，而不是遠程 ssh 的目錄。
+這個選項修改的是本地的工作目錄，而不是遠端 ssh 的目錄。
 
 Q: 為什麼有這個選項呢？
 
-A: 假設 ssh 的配置文件不在 **~/.ssh**，而是位於特定的目錄，通過指定連接 ssh 前的目錄，可以簡化一些操作。
+A: 假設 ssh 的配置檔案不在 **~/.ssh**，而是位於特定的目錄，透過指定連線 ssh 前的目錄，可以簡化一些操作。
 
 #### pre-local-cmd
 
@@ -167,11 +167,11 @@ with:
   pre-local-cmd: ls -lah
 ```
 
-- 類型: String
+- 型別: String
 
-在連接 ssh 前，通過 NodeJS 的 `spawn()` 或 `spawnSync()` 來執行命令。
+在連線 ssh 前，透過 NodeJS 的 `spawn()` 或 `spawnSync()` 來執行命令。
 
-> 這是在本地主機上運行的，而不是遠程主機。
+> 這是在本地主機上執行的，而不是遠端主機。
 
 假設 `pre-local-cmd: ls -la -h` 且沒有配置 `pre-local-cmd-async`, 那麼它會自動解析為 `spawn("ls", ["-la", "-h"])`
 
@@ -182,15 +182,15 @@ with:
   pre-local-cmd-async: true
 ```
 
-- 類型: `bool`
-- 默認: `true`
+- 型別: `bool`
+- 預設: `true`
 
-- 當為 true 時，以異步方式運行命令。
-  - 也就是說，在連接遠程 ssh 之前，讓本機任務在後臺運行。
-- 當為 false 時，同步（阻塞）運行命令。
-  - 在連接遠程 ssh 之前，必須等待 pre-local-cmd 任務完成，才能繼續連接 ssh。
+- 當為 true 時，以非同步方式執行命令。
+  - 也就是說，在連線遠端 ssh 之前，讓本機任務在後臺執行。
+- 當為 false 時，同步（阻塞）執行命令。
+  - 在連線遠端 ssh 之前，必須等待 pre-local-cmd 任務完成，才能繼續連線 ssh。
 
-默認為 true, i.e., 默認是異步的。
+預設為 true, i.e., 預設是非同步的。
 
 #### allow-pre-local-cmd-failure
 
@@ -199,8 +199,8 @@ with:
   allow-pre-local-cmd-failure: true
 ```
 
-- 類型: `bool`
-- 默認: `true`
+- 型別: `bool`
+- 預設: `true`
 
 - 當為 true 時，忽略 pre-local-cmd 的錯誤。
   - 更準確的說法是：當 pre-local-cmd 失敗時，不會導致當前 step 崩潰。
@@ -213,21 +213,21 @@ with:
   pre-sleep: 0
 ```
 
-- typescript 類型: number
-- rust       類型: u32
-- 默認: 0
+- typescript 型別: number
+- rust       型別: u32
+- 預設: 0
 
-在連接 ssh 前，同步（阻塞）特定的時間，單位為秒。
+在連線 ssh 前，同步（阻塞）特定的時間，單位為秒。
 
-假設您要連接一個正在處於重啟中的機器，那現在連接的話，可能過幾秒就斷開了。
+假設您要連線一個正在處於重啟中的機器，那現在連線的話，可能過幾秒就斷開了。
 
-此時，需要強制阻塞，等待幾秒，讓它徹底關機，再嘗試連接。
+此時，需要強制阻塞，等待幾秒，讓它徹底關機，再嘗試連線。
 
 - 例子：
   - `pre-sleep: 1`, 阻塞 1 秒。
   - `pre-sleep: 30`, 阻塞 30 秒。
 
-之所以強調 rust 類型，是因為在內部實現中，是通過以下函數來解析的。
+之所以強調 rust 型別，是因為在內部實現中，是透過以下函式來解析的。
 
 ```rust
 fn parse_gh_num(input: &str) -> u32 {
@@ -240,7 +240,7 @@ fn parse_gh_num(input: &str) -> u32 {
 
 u32 必須要 `>=0`, i.e., 您不能使用 `pre_sleep: -1` 來表示無限阻塞。
 
-P.S. 如果需要在指定時間內測試能否正常連接，那請使用 `pre-timeout`，而不是 `pre-sleep`。
+P.S. 如果需要在指定時間內測試能否正常連線，那請使用 `pre-timeout`，而不是 `pre-sleep`。
 
 #### pre-timeout
 
@@ -249,19 +249,19 @@ with:
   pre-timeout: 0
 ```
 
-- 類型: u32
-- 默認: 0
+- 型別: u32
+- 預設: 0
 
-由於 ssh 連接可能會失敗，指定 pre-timeout 可以讓您在特定的時間內進行等待。
+由於 ssh 連線可能會失敗，指定 pre-timeout 可以讓您在特定的時間內進行等待。
 
-與阻塞的 pre-sleep 不同，對於 pre-timeout，一旦測試連接成功，就會退出等待。
+與阻塞的 pre-sleep 不同，對於 pre-timeout，一旦測試連線成功，就會退出等待。
 
 - 例子：
   - `pre-timeout: 120`, 等待的超時時間為 120 秒。
 
-假設您要連接一個正在處於開機中的虛擬機，那麼要等它連接到網絡，並啟動完 `sshd` 進程後，才能連接上去。
+假設您要連線一個正在處於開機中的虛擬機器，那麼要等它連線到網路，並啟動完 `sshd` 程序後，才能連線上去。
 
-若 `pre-timeout: 30`，而虛擬機的開機時間 + 啟動 sshd 的時間為 10秒，那麼它不會幹等 30 秒，在 10+ 秒時， 一旦測試連接成功，就會退出等待。
+若 `pre-timeout: 30`，而虛擬機器的開機時間 + 啟動 sshd 的時間為 10秒，那麼它不會幹等 30 秒，在 10+ 秒時， 一旦測試連線成功，就會退出等待。
 
 #### pre-exit-cmd
 
@@ -270,18 +270,18 @@ with:
   pre-exit-cmd: exit
 ```
 
-- 類型: String
-- 默認: "exit"
+- 型別: String
+- 預設: "exit"
 
-測試 ssh 連接所需的命令，默認為 exit。
+測試 ssh 連線所需的命令，預設為 exit。
 
 只有當 `pre-timeout > 0` 時，此選項才會生效。
 
 假設 `pre-timeout: 20`, `pre-exit-cmd: exit`，`host: netbsd-vm`
 
-那麼它會在 20 秒內，不斷進行 `ssh netbsd-vm exit` 的連接測試。
+那麼它會在 20 秒內，不斷進行 `ssh netbsd-vm exit` 的連線測試。
 
-只有當測試連接成功後，才會繼續下一步。
+只有當測試連線成功後，才會繼續下一步。
 
 如果在 20 秒後失敗，那麼整個 step 都會失敗。
 
@@ -294,10 +294,10 @@ with:
   host: "127.0.0.1"
 ```
 
-- 類型：String
-- 默認: "127.0.0.1"
+- 型別：String
+- 預設: "127.0.0.1"
 
-遠程主機名稱或 IP 地址。
+遠端主機名稱或 IP 地址。
 
 #### ssh-bin
 
@@ -306,10 +306,10 @@ with:
   ssh-bin: ssh
 ```
 
-- 類型: String
-- 默認: "ssh"
+- 型別: String
+- 預設: "ssh"
 
-在不穩定的網絡環境下，您可能需要使用特定的 ssh，而不是 openssh 客戶端。
+在不穩定的網路環境下，您可能需要使用特定的 ssh，而不是 openssh 客戶端。
 
 只要命令語法符合 `{ssh-bin} {args} {host} {run}` 這條規則，那用什麼都可以。
 
@@ -339,16 +339,16 @@ run: |
 
 #### args
 
-傳給 `ssh_bin` 的參數，例如 `-q -o ServerAliveInterval=60`
+傳給 `ssh_bin` 的引數，例如 `-q -o ServerAliveInterval=60`
 
 #### Main 階段
 
 #### run
 
 - required: true
-- 類型: 字符串
+- 型別: 字串
 
-在遠程主機上執行的命令，執行時所調用的 shell 取決於遠程主機上的默認 login shell。
+在遠端主機上執行的命令，執行時所呼叫的 shell 取決於遠端主機上的預設 login shell。
 
 #### allow-run-failure
 
@@ -357,8 +357,8 @@ with:
   allow-run-failure: true
 ```
 
-- 類型: `bool`
-- 默認: `true`
+- 型別: `bool`
+- 預設: `true`
 
 - 當為 true 時，若 run 出錯，不會導致當前 step 崩潰。
 - 當為 false 時，若 run 出錯，則此 step 將異常退出。
@@ -367,7 +367,7 @@ with:
 
 #### post-run
 
-類似於 run, 但是在 Post 階段運行的。
+類似於 run, 但是在 Post 階段執行的。
 
 #### allow-post-run-failure
 
@@ -379,7 +379,7 @@ with:
 
 ```ts
 成功: true,
-失敗/未運行: false
+失敗/未執行: false
 ```
 
 請看下面這個例子：

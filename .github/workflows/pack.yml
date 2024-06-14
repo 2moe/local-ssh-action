@@ -2,7 +2,7 @@ name: pack
 
 env:
   # commit_msg: "ci(action): merge dev & update wasm + dist/index.js"
-  commit_msg: "docs(readme): +zh-Hant"
+  commit_msg: "docs(readme): update zh-Hant"
 
 on:
   push:
