@@ -390,13 +390,19 @@ Similar to run, but it runs in the Post stage.
 
 Similar to allow-run-failure, but it captures the exit status of post-run, not run.
 
-## About Outputs
+## Outputs
+
+| Outputs               |
+| --------------------- |
+| pre-local-cmd-success |
+| main-run-success      |
+| post-run-success      |
 
 You can use `${{steps."ssh-step-id".outputs.main-run-success}}`, and change "ssh-step-id" to a specific id, to judge whether run is successful.
 
-```ts
-Success: true,
-Failure/Not Run: false
+```rs
+Success => true,
+Failure | Not-Run => false
 ```
 
 Please see the example below:

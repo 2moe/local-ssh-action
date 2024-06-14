@@ -391,13 +391,21 @@ with:
 
 類似於 allow-run-failure， 但捕獲的是 post-run 退出狀態，而不是 run。
 
-## 關於輸出
+## Outputs
 
-您可以使用 `${{steps."ssh-step-id".outputs.main-run-success}}`，並將 "ssh-step-id" 修改為特定 id，來判斷 run 是否成功。
+| 輸出                  |
+| --------------------- |
+| pre-local-cmd-success |
+| main-run-success      |
+| post-run-success      |
 
-```ts
-成功: true,
-失敗/未執行: false
+您可以用 `${{steps."ssh-step-id".outputs.main-run-success}}` 來判斷 run 是否成功。
+
+> 請將 "ssh-step-id" 修改為特定 id
+
+```rs
+成功 => true,
+失敗 | 未執行 => false
 ```
 
 請看下面這個例子：
