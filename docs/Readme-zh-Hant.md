@@ -3,7 +3,7 @@
 | Languages/語言                            | ID         |
 | ----------------------------------------- | ---------- |
 | 中文 (Traditional)                       | zh-Hant-TW |
-| [English (US)](../Readme.md)              | en-Latn-US |
+| [English](../Readme.md)                   | en-Latn-US |
 | [中文 (Simplified)](./Readme-zh.md)      | zh-Hans-CN |
 
 與其他的 ssh actions 不同，此 action 依賴於本地的 ssh。
