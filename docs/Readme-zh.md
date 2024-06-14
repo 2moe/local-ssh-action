@@ -1,9 +1,10 @@
 # Local-SSH-Action
 
-| Languages/語言          | ID         |
-| ----------------------- | ---------- |
-| 中文                    | zh-Hans-CN |
-| [English](../Readme.md) | en-Latn-US |
+| Languages/語言                            | ID         |
+| ----------------------------------------- | ---------- |
+| 中文 (Simplified)                         | zh-Hans-CN |
+| [English (US)](../Readme.md)              | en-Latn-US |
+| [中文 (Traditional)](./Readme-zh-Hant.md) | zh-Hant-TW |
 
 与其他的 ssh actions 不同，此 action 依赖于本地的 ssh。
 
