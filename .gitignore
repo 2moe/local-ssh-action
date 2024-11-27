@@ -15,6 +15,7 @@ flamegraph.svg
 /lib/bs
 
 # # white list
+!/dist
 !/assets
 !/.git*
 !/LICENSE*
@@ -28,7 +29,6 @@ flamegraph.svg
 !/Cargo*
 !/docs
 !/js
-!/dist
 !/biome.json
 !/package.json
 !/.rustfmt.toml
