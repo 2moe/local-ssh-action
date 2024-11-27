@@ -31,3 +31,4 @@ flamegraph.svg
 !/dist
 !/biome.json
 !/package.json
+!/.rustfmt.toml

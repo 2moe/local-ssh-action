@@ -1,10 +1,10 @@
 # Local-SSH-Action
 
-| Languages/語言                            | ID         |
-| ----------------------------------------- | ---------- |
-| 中文                                      | zh-Hans-CN |
-| [English](../Readme.md)                   | en-Latn-US |
-| [中文 (Traditional)](./Readme-zh-Hant.md) | zh-Hant-TW |
+| Language/語言                   | ID         |
+| ------------------------------- | ---------- |
+| 简体中文                        | zh-Hans-CN |
+| [English](../Readme.md)         | en-Latn-US |
+| [繁體中文](./Readme-zh-Hant.md) | zh-Hant-TW |
 
 与其他的 ssh actions 不同，此 action 依赖于本地的 ssh。
 
@@ -78,7 +78,7 @@ jobs:
 
 别着急，容我慢慢与您道来。
 
-上面这段例子本质上是在执行 `ssh android-mobild uname -m`，如果运行 actions 的机器上不存在 `android-mobile` 的 ssh 配置，那就连接不上。
+上面这段例子本质上是在执行 `ssh android-mobile uname -m`，如果运行 actions 的机器上不存在 `android-mobile` 的 ssh 配置，那就连接不上。
 
 解决方法很简单，创建一个配置就行了。
 
@@ -331,11 +331,11 @@ with:
 
 只要命令语法符合 `{ssh-bin} {args} {host} {run}` 这条规则，那用什么都可以。
 
-假设有 `adb -s android-14 shell [run]`，此时您可以使用
+假设有 `adb -s android-16 shell [run]`，此时您可以使用
 
 ```yaml
 ssh-bin: adb
-args: -s android-14
+args: -s android-16
 host: shell
 run: |
   ls -lh

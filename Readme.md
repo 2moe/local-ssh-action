@@ -1,10 +1,10 @@
 # Local SSH Action
 
-| Languages/語言                                 | ID         |
-| ---------------------------------------------- | ---------- |
-| English                                        | en-Latn-US |
-| [中文](./docs/Readme-zh.md)                    | zh-Hans-CN |
-| [中文 (Traditional)](./docs/Readme-zh-Hant.md) | zh-Hant-TW |
+| Language/語言                        | ID         |
+| ------------------------------------ | ---------- |
+| English                              | en-Latn-US |
+| [简体中文](./docs/Readme-zh.md)      | zh-Hans-CN |
+| [繁體中文](./docs/Readme-zh-Hant.md) | zh-Hant-TW |
 
 Unlike other ssh actions, this one depends on local ssh.
 
@@ -330,11 +330,11 @@ In an unstable network environment, you may need to use a specific ssh, not the 
 
 As long as the command syntax conforms to the `{ssh-bin} {args} {host} {run}` rule, anything can be used.
 
-Suppose there is `adb -s android-14 shell [run]`, then you can use
+Suppose there is `adb -s android-16 shell [run]`, then you can use
 
 ```yaml
 ssh-bin: adb
-args: -s android-14
+args: -s android-16
 host: shell
 run: |
   ls -lh
