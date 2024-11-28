@@ -32,7 +32,7 @@ function getInput(name) {
 function setOutput(key, value) {
     const fs = require("node:fs");
     const outputPath = process.env.GITHUB_OUTPUT || "";
-    const lineBreak = require('os').EOL;
+    const lineBreak = require('node:os').EOL;
 
     if (outputPath) {
         return fs.appendFileSync(outputPath, `${key}=${value}${lineBreak}`);

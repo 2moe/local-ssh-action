@@ -37,7 +37,7 @@ I believe it will bring you a good ssh action experience.
 | allow-pre-local-cmd-failure | When true, ignore the errors of pre-local-cmd.                                                                    | false     |
 | pre-sleep                   | blocking for a specific time before connecting to ssh, in seconds.                                                | 0         |
 | pre-timeout                 | Since the ssh connection may fail, specifying pre-timeout allows it to keep trying to connect until it times out. | 0         |
-| pre-exit-cmd                | The command needed to test ssh.                                                                                   | exit      |
+| pre-exit-cmd                | The command needed to test ssh connection.                                                                        | exit      |
 | host                        | Remote Server Host                                                                                                | 127.0.0.1 |
 | ssh-bin                     | In an unstable network environment, you may need to use a specific ssh, not the openssh client.                   | ssh       |
 | run                         | Commands to be executed on remote server                                                                          |           |

@@ -39,7 +39,7 @@ apt install openssh-client
 | allow-pre-local-cmd-failure | 类型：boolean。当为 true 时，允许 `pre-local-cmd` 失败 (忽略 pre-local-cmd 出错) | false     |
 | pre-sleep                   | 在连接到 ssh 之前，阻塞特定时间，单位为秒                                        | 0         |
 | pre-timeout                 | 由于 ssh 连接可能会失败，指定 `pre-timeout` 可以让其不断重试连接，直到超时       | 0         |
-| pre-exit-cmd                | 测试 ssh 所需的命令                                                              | exit      |
+| pre-exit-cmd                | 测试 ssh 连接所需的命令                                                          | exit      |
 | host                        | 远程服务器的主机名或 IP                                                          | 127.0.0.1 |
 | ssh-bin                     | 在不稳定的网络环境中，您可能需要使用特定的ssh，而不是 openssh 客户端             | ssh       |
 | run                         | 在远程主机上执行的命令                                                           |           |
