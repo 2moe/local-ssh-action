@@ -2,9 +2,10 @@ name: build-wasm & release
 
 env:
   branch: v0
-  tag: "v0.0.9"
+  tag: "v0.0.10"
   # commit_msg: "ci(action): merge dev & update wasm + dist/index.js"
-  commit_msg: "ci: release v0.0.9"
+  # commit_msg: "ci: release v0.0.10"
+  commit_msg: "feat(pre_stage): +log::trace(show_all_envs())"
 on:
   push:
     branches:
@@ -28,8 +29,9 @@ jobs:
         run: |
           curl -Lo a.tgz '${{steps.get_binstall.outputs.url}}'
           tar -xvf a.tgz
-          sudo install -Dm755 cargo-binstall /usr/local/bin
-          cargo-binstall -y wasm-pack
+          install -m755 cargo-binstall binstall
+          # wasm-bindgen-cli binaryen
+          ./binstall -y wasm-pack
 
       - uses: actions/checkout@v4
 

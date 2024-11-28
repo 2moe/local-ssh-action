@@ -1,4 +1,4 @@
-const child = require("node:child_process");
+const { spawn, spawnSync } = require("node:child_process");
 
 /**
  * Spawns a process to run external command
@@ -24,24 +24,23 @@ function spawnCmd(cmd, args, sync) {
     exit-code: ${eCode}
     sync: ${sync}
     `;
-        throw Error(errMsg);
+        throw new Error(errMsg);
     };
 
     let eCode;
 
     // sync:
     if (sync) {
-        eCode = child.spawnSync(cmd, args, options).status;
+        eCode = spawnSync(cmd, args, options).status;
         return handleErr();
     }
 
     // async:
-    child.spawn(cmd, args, options).on("close", (code) => {
+    spawn(cmd, args, options).on("close", (code) => {
         eCode = code;
         handleErr();
     });
 }
-module.exports.spawnCmd = spawnCmd;
 
 /**
  * This is a synchronous thread blocking function that pauses for a specified number of milliseconds. When milliseconds are passed in, it will automatically multiply by 1000 to convert to seconds.
@@ -52,8 +51,6 @@ function sleep(time) {
     const endTime = new Date(new Date().getTime() + time * 1000);
     while (endTime > new Date());
 }
-
-module.exports.sleep = sleep;
 
 /**
  * Runs within the specified time and keep retrying.
@@ -71,7 +68,7 @@ function retryCommandWithinTime(cmd, args, timeout) {
     while (Date.now() - startTime <= timeout * 1000) {
         let code = 2;
         try {
-            code = child.spawnSync(cmd, args, {
+            code = spawnSync(cmd, args, {
                 stdio: "inherit",
             }).status;
         } catch (error) {
@@ -88,7 +85,6 @@ function retryCommandWithinTime(cmd, args, timeout) {
     );
     return false;
 }
-module.exports.retryCommandWithinTime = retryCommandWithinTime;
 
 /**
  * See also `process.exit()`
@@ -98,6 +94,7 @@ module.exports.retryCommandWithinTime = retryCommandWithinTime;
  * @returns {never}
  */
 function nodeExit(code) {
-    require("node:process").exit(code);
+    process.exit(code);
 }
-module.exports.nodeExit = nodeExit;
+
+module.exports = { nodeExit, retryCommandWithinTime, sleep, spawnCmd };

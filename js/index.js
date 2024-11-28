@@ -1,4 +1,4 @@
-// import * as wasm from "../pkg/ssh_action_wasm.js";
+// import wasm from "../pkg/ssh_action_wasm.js";
 const wasm = require("../pkg/ssh_action_wasm.js");
 
 const _logger = wasm.init_logger();

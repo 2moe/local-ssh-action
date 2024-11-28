@@ -6,7 +6,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::{
     chdir, cwd, get_action_input, node_exit, parse_gh_bool, set_action_output,
-    spawn_cmd,
+    show_all_envs, spawn_cmd,
 };
 
 /// Pass in a complete command. Call shlex to extract the command into Some((cmd, args))
@@ -65,6 +65,11 @@ pub fn run_pre_local_cmd() {
 
 #[wasm_bindgen]
 pub fn set_pre_local_workdir() {
+    log::trace!(
+        "show_all_envs: {}",
+        if show_all_envs() { "END" } else { "See above." }
+    );
+
     debug!("set_pre_local_workdir()");
 
     let raw = match cfg!(debug_assertions) {

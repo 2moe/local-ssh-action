@@ -1,10 +1,10 @@
 # Local-SSH-Action
 
-| Languages/語言                            | ID         |
-| ----------------------------------------- | ---------- |
-| 中文 (Traditional)                       | zh-Hant-TW |
-| [English](../Readme.md)                   | en-Latn-US |
-| [中文 (Simplified)](./Readme-zh.md)      | zh-Hans-CN |
+| Language/語言              | ID         |
+| -------------------------- | ---------- |
+| 繁體中文                   | zh-Hant-TW |
+| [English](../Readme.md)    | en-Latn-US |
+| [简体中文](./Readme-zh.md) | zh-Hans-CN |
 
 與其他的 ssh actions 不同，此 action 依賴於本地的 ssh。
 
@@ -35,7 +35,7 @@ apt install openssh-client
 | log-level                   | 可選值："trace", "debug", "info", "warn", "error", "off"                         | info      |
 | pre-local-workdir           | 本地工作目錄                                                                     |           |
 | pre-local-cmd               | 在連線到 ssh 之前，透過 NodeJS 的 `spawn()` 或 `spawnSync()` 執行命令            |           |
-| pre-local-cmd-async         | 型別：boolean。當為 true 時，非同步執行 `pre-local-cmd`                            | true      |
+| pre-local-cmd-async         | 型別：boolean。當為 true 時，非同步執行 `pre-local-cmd`                          | true      |
 | allow-pre-local-cmd-failure | 型別：boolean。當為 true 時，允許 `pre-local-cmd` 失敗 (忽略 pre-local-cmd 出錯) | false     |
 | pre-sleep                   | 在連線到 ssh 之前，阻塞特定時間，單位為秒                                        | 0         |
 | pre-timeout                 | 由於 ssh 連線可能會失敗，指定 `pre-timeout` 可以讓其不斷重試連線，直到超時       | 0         |
@@ -78,7 +78,7 @@ jobs:
 
 彆著急，容我慢慢與您道來。
 
-上面這段例子本質上是在執行 `ssh android-mobild uname -m`，如果執行 actions 的機器上不存在 `android-mobile` 的 ssh 配置，那就連線不上。
+上面這段例子本質上是在執行 `ssh android-mobile uname -m`，如果執行 actions 的機器上不存在 `android-mobile` 的 ssh 配置，那就連線不上。
 
 解決方法很簡單，建立一個配置就行了。
 
@@ -331,11 +331,11 @@ with:
 
 只要命令語法符合 `{ssh-bin} {args} {host} {run}` 這條規則，那用什麼都可以。
 
-假設有 `adb -s android-14 shell [run]`，此時您可以使用
+假設有 `adb -s android-16 shell [run]`，此時您可以使用
 
 ```yaml
 ssh-bin: adb
-args: -s android-14
+args: -s android-16
 host: shell
 run: |
   ls -lh
