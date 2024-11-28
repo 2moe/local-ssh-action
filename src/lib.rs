@@ -29,18 +29,6 @@ pub struct InputConfig {
     allow_post_run_failure: bool,
 }
 
-#[wasm_bindgen(module = "@actions/core")]
-extern "C" {
-    #[wasm_bindgen(js_name = getInput)]
-    fn get_action_input(s: &str) -> String;
-
-    // #[wasm_bindgen(js_name = getBooleanInput)]
-    // fn get_bool_input(s: &str) -> bool;
-
-    #[wasm_bindgen(js_name = setOutput)]
-    fn set_action_output(key: &str, value: &str);
-}
-
 #[wasm_bindgen(module = "node:process")]
 extern "C" {
     #[wasm_bindgen]
@@ -48,6 +36,30 @@ extern "C" {
 
     #[wasm_bindgen]
     fn chdir(s: &str);
+}
+
+// #[wasm_bindgen(module = "@actions/core")]
+// extern "C" {
+//     #[wasm_bindgen(js_name = getInput)]
+//     fn get_action_input(s: &str) -> String;
+//
+//     // #[wasm_bindgen(js_name = getBooleanInput)]
+//     // fn get_bool_input(s: &str) -> bool;
+//
+//     #[wasm_bindgen(js_name = setOutput)]
+//     fn set_action_output(key: &str, value: &str);
+// }
+
+#[wasm_bindgen(raw_module = "../js/actionsFFI.cjs")]
+extern "C" {
+    #[wasm_bindgen(js_name = getInput)]
+    fn get_action_input(s: &str) -> String;
+
+    #[wasm_bindgen(js_name = setOutput)]
+    fn set_action_output(key: &str, value: &str);
+
+    #[wasm_bindgen(js_name = showAllEnvs)]
+    fn show_all_envs() -> bool;
 }
 
 #[wasm_bindgen(raw_module = "../js/ffi.cjs")]

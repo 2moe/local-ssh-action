@@ -1,10 +1,11 @@
 {
   "version": "0.0.10",
   "name": "local-ssh-action",
-  "license": "MIT",
+  "license": "MIT OR Apache-2.0",
   "author": "2moe",
   "description": "Connect using the local ssh command and run commands",
   "main": "js/index.js",
+  "type": "commonjs",
   "scripts": {
     "ci:set-git-bot": "git config --local user.name 'github-actions[bot]'; git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com' && git add .",
     "ncc-pack": "ncc build --minify --license licenses.txt",
@@ -17,9 +18,6 @@
     "github-actions",
     "ssh"
   ],
-  "dependencies": {
-    "@actions/core": "^1.11.1"
-  },
   "devDependencies": {
     "@vercel/ncc": "^0.38.3"
   }
